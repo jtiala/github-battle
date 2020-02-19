@@ -1,10 +1,10 @@
 import React from "react";
+import classNames from "classnames";
 import { formatDistanceToNow } from "date-fns";
 import { useService } from "@xstate/react";
 
 import { usersService } from "../state/users";
 import { User } from "../api/github";
-import Loading from "./Loading";
 import UserCard from "./UserCard";
 import BattleTableHeadRow from "./BattleTableHeadRow";
 import BattleTableBodyRow from "./BattleTableBodyRow";
@@ -18,7 +18,7 @@ export interface TableData {
   [rowName: string]: TableRow;
 }
 
-const buildTableData = (users: User[]): TableData => {
+const buildTableData = (users: User[], isLoading: boolean): TableData => {
   const data: TableData = {
     user: { content: [] },
     profile_age: { heading: "Profile Age", content: [] },
@@ -37,18 +37,17 @@ const buildTableData = (users: User[]): TableData => {
     data["repos"].content.push(user.public_repos);
   });
 
+  if (isLoading) {
+    data["user"].content.push(<UserCard />);
+  }
+
   return data;
 };
 
 const buildHeadRows = (data: TableData): React.ReactNode[] =>
   Object.entries(data).map(([id, row]) =>
     id === "user" ? (
-      <BattleTableHeadRow
-        key={`row-${id}`}
-        id={id}
-        row={row}
-        totalColumns={Object.keys(row.content).length + 1}
-      />
+      <BattleTableHeadRow key={`row-${id}`} id={id} row={row} />
     ) : (
       undefined
     )
@@ -80,17 +79,20 @@ const BattleTable: React.FC = () => {
     );
   }
 
-  if (current.matches("loading")) {
-    return <Loading />;
-  }
-
-  if (current.context.users.length > 0) {
-    const data = buildTableData(current.context.users);
+  if (current.context.users.length > 0 || current.matches("loading")) {
+    const data = buildTableData(
+      current.context.users,
+      current.matches("loading")
+    );
     const headRows = buildHeadRows(data);
     const bodyRows = buildBodyRows(data);
 
+    const className = classNames("table-fixed border-collapse", {
+      "opacity-50": current.matches("loading")
+    });
+
     return (
-      <table className="table-fixed border-collapse">
+      <table className={className}>
         <thead>{headRows}</thead>
         <tbody>{bodyRows}</tbody>
       </table>

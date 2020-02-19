@@ -5,6 +5,8 @@
 
 @import "tailwindcss/utilities";
 
+@import "./spinner.css";
+
 body {
   @apply bg-gray-100;
 }

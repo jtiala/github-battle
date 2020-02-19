@@ -2,7 +2,6 @@ import React from "react";
 import classNames from "classnames";
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children?: React.ReactNode;
   variant?: "primary" | "text";
 }
 

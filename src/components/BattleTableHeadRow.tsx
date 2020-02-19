@@ -6,10 +6,10 @@ import { TableRow } from "./BattleTable";
 interface Props {
   id: string;
   row: TableRow;
-  totalColumns: number;
 }
 
-const BattleTableHeadRow: React.FC<Props> = ({ id, row, totalColumns }) => {
+const BattleTableHeadRow: React.FC<Props> = ({ id, row }) => {
+  const totalColumns = Object.keys(row.content).length + 1;
   const widthClass = totalColumns > 6 ? "w-1/6" : `w-1/${totalColumns}`;
 
   return (
