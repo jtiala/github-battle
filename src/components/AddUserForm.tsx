@@ -1,56 +1,59 @@
 import React, { useState, FormEvent } from "react";
 import { useService } from "@xstate/react";
 
-import { usersService } from "../state/users";
+import { appService } from "../state/app";
 import Input from "./Input";
 import Button from "./Button";
 
-const exampleUsers = ["jtiala", "gaearon", "davidkpiano", "adamwathan"];
-const getExampleUser = (index: number): string =>
-  exampleUsers[index % exampleUsers.length];
+const exampleUsers = ["jtiala", "davidkpiano", "adamwathan", "gaearon"];
+const getExampleUser = (index: number): string => exampleUsers[index];
 
 const AddUserForm: React.FC = () => {
-  const [, send] = useService(usersService);
-  const [login, setLogin] = useState("");
+  const [, send] = useService(appService);
+  const [username, setUsername] = useState("");
   const [currentExample, setCurrentExample] = useState(0);
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault();
-    send({ type: "FETCH", login });
-    setLogin("");
+    send({ type: "ADD_USER", username });
+    setUsername("");
   };
 
   const addExampleUser = () => {
     send({
-      type: "FETCH",
-      login: getExampleUser(currentExample)
+      type: "ADD_USER",
+      username: getExampleUser(currentExample)
     });
     setCurrentExample(currentExample + 1);
   };
 
   return (
-    <form className="flex items-end" onSubmit={submitForm}>
-      <div className="m-1">
+    <>
+      <form className="flex items-center" onSubmit={submitForm}>
         <Input
           label="GitHub username"
           labelHidden={true}
           placeholder="GitHub username"
-          value={login}
-          onChange={event => setLogin(event.target.value)}
+          value={username}
+          onChange={event => setUsername(event.target.value)}
         />
-      </div>
-      <div className="m-1 flex items-center">
-        <Button type="submit" disabled={!login}>
-          Add user
-        </Button>
-        <span className="ml-4">
-          ...or{" "}
-          <Button variant="text" onClick={addExampleUser}>
-            add a thought leader
+        <div className="ml-1">
+          <Button type="submit" disabled={!username}>
+            Add user
           </Button>
-        </span>
-      </div>
-    </form>
+        </div>
+      </form>
+      <span className="mt-1">
+        ...or{" "}
+        <Button
+          variant="text"
+          onClick={addExampleUser}
+          disabled={currentExample === exampleUsers.length}
+        >
+          add an example user
+        </Button>
+      </span>
+    </>
   );
 };
 

@@ -9,10 +9,10 @@ const Header: React.FC = () => (
     <div className="my-8">
       <Heading level="h1">
         <Link href="/" variant="dark">
-          GitHub Battle{" "}
           <span role="img" aria-label="explosion">
             💥
-          </span>
+          </span>{" "}
+          GitHub Battle
         </Link>
       </Heading>
     </div>
