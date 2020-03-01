@@ -1,44 +1,61 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 💥 GitHub Battle
 
-## Available Scripts
+[![Netlify Status](https://api.netlify.com/api/v1/badges/03fdbd3e-f413-4b4e-9699-d4bf30a18a84/deploy-status)](https://app.netlify.com/sites/gh-bat/deploys)
+[![Dependencies Status][dependencies-status-badge]][dependencies-status]
+[![Dev Dependencies Status][devdependencies-status-badge]][devdependencies-status]
+[![License][license-badge]](license)
 
-In the project directory, you can run:
+GitHub Battle is my case-study for evaluating [XState][xstate].
 
-### `npm start`
+## Pre-requisites
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [Git][git]
+- [Node][node]
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Development
 
-### `npm test`
+Duplicate `.env.example` as `.env` and edit in your GitHub access token.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    cp .env.example .env
 
-### `npm run build`
+Install dependencies
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    npm install
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Start the development environment
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    npm run start
 
-### `npm run eject`
+Start interactive test runner
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    npm run test
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Production
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Duplicate `.env.example` as `.env` and edit in your GitHub access token.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    cp .env.example .env
 
-## Learn More
+Install dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Build the production bundle
+
+    npm run build
+
+## License
+
+This project is open source software licensed under the MIT license. For more information see [LICENSE][license].
+
+[netlify-status]: https://app.netlify.com/sites/gh-bat/deploys
+[netlify-status-badge]: https://api.netlify.com/api/v1/badges/03fdbd3e-f413-4b4e-9699-d4bf30a18a84/deploy-status
+[dependencies-status]: https://david-dm.org/jtiala/github-battle
+[dependencies-status-badge]: https://img.shields.io/david/jtiala/github-battle.svg
+[devdependencies-status]: https://david-dm.org/jtiala/github-battle?type=dev
+[devdependencies-status-badge]: https://img.shields.io/david/dev/jtiala/github-battle.svg
+[license]: https://github.com/jtiala/github-battle/blob/master/LICENSE
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[git]: https://git-scm.com/
+[node]: https://nodejs.org/
+[xstate]: https://xstate.js.org
