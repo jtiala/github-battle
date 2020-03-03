@@ -1,15 +1,18 @@
 import React, { useState, FormEvent } from "react";
-import { useService } from "@xstate/react";
+import { Interpreter } from "xstate";
 
-import { appService } from "../state/app";
+import { AppContext, AppEvent, AppSchema } from "../state/app";
 import Input from "./Input";
 import Button from "./Button";
 
 const exampleUsers = ["jtiala", "davidkpiano", "adamwathan", "gaearon"];
 const getExampleUser = (index: number): string => exampleUsers[index];
 
-const AddUserForm: React.FC = () => {
-  const [, send] = useService(appService);
+interface Props {
+  send: Interpreter<AppContext, AppSchema, AppEvent>["send"];
+}
+
+const AddUserForm: React.FC<Props> = ({ send }) => {
   const [username, setUsername] = useState("");
   const [currentExample, setCurrentExample] = useState(0);
 

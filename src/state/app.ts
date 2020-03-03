@@ -1,9 +1,10 @@
-import { Machine, assign, spawn, Interpreter, interpret, send } from "xstate";
+import { Machine, assign, spawn, Interpreter, send } from "xstate";
 import { isBefore } from "date-fns";
 
 import { UserContext, UserSchema, UserEvent, createUserMachine } from "./user";
 
 export interface AppContext {
+  initialUsers: string[];
   users: {
     [username: string]: Interpreter<UserContext, UserSchema, UserEvent>;
   };
@@ -19,6 +20,7 @@ export interface AppContext {
 
 export interface AppSchema {
   states: {
+    initializing: {};
     idle: {};
   };
 }
@@ -31,13 +33,28 @@ export type AppEvent =
 export const createAppMachine = () => {
   return Machine<AppContext, AppSchema, AppEvent>({
     id: "app",
-    initial: "idle",
+    initial: "initializing",
     context: {
+      initialUsers: [],
       users: {},
       winners: {},
       champion: ""
     },
     states: {
+      initializing: {
+        entry: assign(context => ({
+          users: context.initialUsers.reduce(
+            (machines: AppContext["users"], username) => ({
+              ...machines,
+              [username]: spawn(createUserMachine(username))
+            }),
+            {}
+          )
+        })),
+        on: {
+          "": "idle"
+        }
+      },
       idle: {}
     },
     on: {
@@ -82,10 +99,6 @@ export const createAppMachine = () => {
     }
   });
 };
-
-export const appService = interpret(createAppMachine())
-  .onTransition(state => console.log("New app state", state))
-  .start();
 
 const calculateWinner = (
   category: keyof AppContext["winners"],

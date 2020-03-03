@@ -1,10 +1,16 @@
 import React from "react";
+import { Interpreter } from "xstate";
 
+import { AppContext, AppEvent, AppSchema } from "../state/app";
 import Heading from "./Heading";
 import Link from "./Link";
 import AddUserForm from "./AddUserForm";
 
-const Header: React.FC = () => (
+interface Props {
+  send: Interpreter<AppContext, AppSchema, AppEvent>["send"];
+}
+
+const Header: React.FC<Props> = ({ send }) => (
   <header className="m-4 flex flex-col items-center ">
     <div className="my-8">
       <Heading level="h1">
@@ -16,7 +22,7 @@ const Header: React.FC = () => (
         </Link>
       </Heading>
     </div>
-    <AddUserForm />
+    <AddUserForm send={send} />
   </header>
 );
 

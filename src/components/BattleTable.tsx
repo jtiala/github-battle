@@ -1,12 +1,16 @@
 import React from "react";
 import classNames from "classnames";
-import { useService } from "@xstate/react";
+import { State, Interpreter } from "xstate";
 
-import { appService } from "../state/app";
+import { AppContext, AppEvent, AppSchema } from "../state/app";
 import UserColumns from "./UserColumns";
 
-const BattleTable: React.FC = () => {
-  const [current, send] = useService(appService);
+interface Props {
+  current: State<AppContext, AppEvent, AppSchema>;
+  send: Interpreter<AppContext, AppSchema, AppEvent>["send"];
+}
+
+const BattleTable: React.FC<Props> = ({ current, send }) => {
   const usersCount = Object.values(current.context.users).length;
 
   if (usersCount) {
