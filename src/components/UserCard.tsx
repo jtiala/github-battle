@@ -16,7 +16,7 @@ interface Props {
 const UserCard: React.FC<Props> = ({ user, username, retry, remove }) => {
   if (typeof retry === "function" && typeof remove === "function") {
     return (
-      <div className="p-2 flex flex-col items-center font-normal">
+      <div className="flex flex-col items-center font-normal">
         <p className="text-red-500 pb-1">Oops!</p>
         <div className="pb-1">
           <Button size="small" onClick={() => retry()}>
@@ -43,7 +43,7 @@ const UserCard: React.FC<Props> = ({ user, username, retry, remove }) => {
 
   if (!user) {
     return (
-      <div className="p-2 flex flex-col items-center font-normal">
+      <div className="flex flex-col items-center font-normal">
         <div className="h-24 w-24">
           <Spinner />
         </div>
@@ -63,7 +63,7 @@ const UserCard: React.FC<Props> = ({ user, username, retry, remove }) => {
   }
 
   return (
-    <div className="p-2 flex flex-col items-center font-normal">
+    <div className="flex flex-col items-center font-normal">
       <Link
         href={`https://github.com/${user.login}`}
         target="_blank"
