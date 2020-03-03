@@ -10,7 +10,8 @@ const classes = {
   base: "transition-all duration-150 ease-in disabled:opacity-75",
   primary:
     "flex items-center border-2 border-blue-400 bg-blue-400 hover:bg-blue-600 hover:border-blue-600 focus:bg-blue-600 focus:border-blue-800 text-white leading-none",
-  text: "text-blue-600 hover:text-blue-800 disabled:opacity-50",
+  text:
+    "text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:text-blue-600",
   normal: "p-4",
   small: "px-2 py-1"
 };
