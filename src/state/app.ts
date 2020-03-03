@@ -131,7 +131,7 @@ export const createAppMachine = () => {
               if (!pathParts.includes(username)) {
                 const newPath = `${
                   currentPath === "/" ? "" : currentPath
-                }/${username}`;
+                }/${username}`.replace("//", "/");
 
                 context.history.push(newPath);
               }
