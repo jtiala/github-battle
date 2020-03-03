@@ -1,20 +1,22 @@
 import React, { useState, FormEvent } from "react";
-import { Interpreter } from "xstate";
+import { State, Interpreter } from "xstate";
 
 import { AppContext, AppEvent, AppSchema } from "../state/app";
 import Input from "./Input";
 import Button from "./Button";
 
-const exampleUsers = ["jtiala", "davidkpiano", "adamwathan", "gaearon"];
-const getExampleUser = (index: number): string => exampleUsers[index];
-
 interface Props {
+  current: State<AppContext, AppEvent, AppSchema>;
   send: Interpreter<AppContext, AppSchema, AppEvent>["send"];
 }
 
-const AddUserForm: React.FC<Props> = ({ send }) => {
+const AddUserForm: React.FC<Props> = ({ current, send }) => {
   const [username, setUsername] = useState("");
-  const [currentExample, setCurrentExample] = useState(0);
+
+  const exampleUsers = ["jtiala", "davidkpiano", "adamwathan", "gaearon"];
+  const availableExampleUsers = exampleUsers.filter(
+    user => !Object.keys(current.context.users).includes(user)
+  );
 
   const submitForm = (event: FormEvent) => {
     event.preventDefault();
@@ -25,9 +27,8 @@ const AddUserForm: React.FC<Props> = ({ send }) => {
   const addExampleUser = () => {
     send({
       type: "ADD_USER",
-      username: getExampleUser(currentExample)
+      username: availableExampleUsers[0]
     });
-    setCurrentExample(currentExample + 1);
   };
 
   return (
@@ -51,7 +52,7 @@ const AddUserForm: React.FC<Props> = ({ send }) => {
         <Button
           variant="text"
           onClick={addExampleUser}
-          disabled={currentExample === exampleUsers.length}
+          disabled={!availableExampleUsers.length}
         >
           add an example user
         </Button>

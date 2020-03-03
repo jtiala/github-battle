@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
   return (
     <section className="container mx-auto my-4 flex flex-col items-stretch bg-white shadow-md">
-      <Header send={send} />
+      <Header current={current} send={send} />
       <Switch>
         <Route>
           <BattleTable current={current} send={send} />
