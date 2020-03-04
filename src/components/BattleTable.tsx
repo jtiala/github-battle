@@ -40,9 +40,9 @@ const BattleTable: React.FC<Props> = ({ current, send }) => {
       gridAutoColumns: `${100 / (usersCount + 1)}%`
     };
 
-    const className = classNames("flex flex-col md:grid m-4", {
-      "w-1/2 self-center": usersCount === 1,
-      "w-3/4 self-center": usersCount === 2
+    const className = classNames("flex flex-col self-stretch md:grid m-4", {
+      "md:w-1/2 md:self-center": usersCount === 1,
+      "md:w-3/4 md:self-center": usersCount === 2
     });
 
     return (
